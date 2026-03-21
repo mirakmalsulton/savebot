@@ -1,0 +1,68 @@
+version: "3"
+services:
+    mysql:
+        image: mariadb:11.0
+        volumes:
+            - ./storage/docker/mysql:/var/lib/mysql
+            - ./:/var/www/app
+        environment:
+            - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}"
+            - "MYSQL_DATABASE=${DB_DATABASE}"
+            - "MYSQL_USER=${DB_USERNAME}"
+            - "MYSQL_PASSWORD=${DB_PASSWORD}"
+        ports:
+            - "${DB_PORT}:3306"
+        tty: true
+        restart: always
+
+    cli:
+        user: "1000:2000"
+        build:
+            context: ./
+            dockerfile: ./docker/dev/php/cli/Dockerfile
+        volumes:
+            - ./:/var/www/app
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+        tty: true
+        restart: always
+
+    fpm:
+        user: "1000:2000"
+        build:
+            context: ./
+            dockerfile: ./docker/dev/php/fpm/Dockerfile
+        volumes:
+            - ./:/var/www/app
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+        depends_on:
+            - mysql
+        restart: always
+
+    nginx:
+        build:
+            context: ./
+            dockerfile: ./docker/dev/nginx/Dockerfile
+        volumes:
+            - ./:/var/www/app
+        ports:
+            - "80:80"
+        depends_on:
+            - fpm
+        restart: always
+
+    worker:
+        user: "1000:2000"
+        build:
+            context: ./
+            dockerfile: ./docker/dev/php/worker/Dockerfile
+        volumes:
+            - ./:/var/www/app
+        environment:
+            - "DB_PORT=3306"
+            - "DB_HOST=mysql"
+        tty: true
+        restart: always
