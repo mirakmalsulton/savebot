@@ -1,10 +1,13 @@
 version: "3"
+
+volumes:
+  mysql_data:
+
 services:
   mysql:
     image: mariadb:11.0
     volumes:
-      - ./storage/docker/mysql:/var/lib/mysql
-      - ./:/var/www/app
+      - mysql_data:/var/lib/mysql
     environment:
       - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}"
       - "MYSQL_DATABASE=${DB_DATABASE}"
@@ -19,7 +22,7 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/prod/php/cli/Dockerfile
+      dockerfile: ./docker/dev/php/cli/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
@@ -32,7 +35,7 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/prod/php/fpm/Dockerfile
+      dockerfile: ./docker/dev/php/fpm/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
@@ -45,7 +48,7 @@ services:
   nginx:
     build:
       context: ./
-      dockerfile: ./docker/prod/nginx/Dockerfile
+      dockerfile: ./docker/dev/nginx/Dockerfile
     volumes:
       - ./:/var/www/app
     ports:
@@ -59,13 +62,13 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/prod/php/worker/Dockerfile
+      dockerfile: ./docker/dev/php/worker/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
       - "DB_PORT=3306"
       - "DB_HOST=mysql"
-    tty: true
     depends_on:
       - mysql
+    tty: true
     restart: always

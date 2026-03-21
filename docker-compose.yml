@@ -1,10 +1,13 @@
 version: "3"
+
+volumes:
+  mysql_data:
+
 services:
     mysql:
         image: mariadb:11.0
         volumes:
-            - ./storage/docker/mysql:/var/lib/mysql
-            - ./:/var/www/app
+            - mysql_data:/var/lib/mysql
         environment:
             - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}"
             - "MYSQL_DATABASE=${DB_DATABASE}"
@@ -64,5 +67,7 @@ services:
         environment:
             - "DB_PORT=3306"
             - "DB_HOST=mysql"
+        depends_on:
+          - mysql
         tty: true
         restart: always
