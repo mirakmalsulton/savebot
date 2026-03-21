@@ -4,7 +4,7 @@ ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/mas
 RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
 RUN install-php-extensions pdo_mysql mcrypt
 
-COPY ./docker/prod/php/cli/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/dev/php/cli/conf.d /usr/local/etc/php/conf.d
 
 RUN curl -s https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
