@@ -32,7 +32,8 @@ class Shorts implements VideoProviderInterface
             '--no-warnings',
             '--socket-timeout', '20',
 
-            '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+//            '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            '-f', 'best[ext=mp4]/best',
             '-o', $tempPath,
             $url
         ];
