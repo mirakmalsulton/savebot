@@ -22,20 +22,23 @@ class Shorts implements VideoProviderInterface
             mkdir(storage_path('app/public/temp'), 0777, true);
         }
 
+        // путь к cookies.txt
+        $cookiesPath = storage_path('app/private/cookies.txt');
+
         $command = [
             'yt-dlp',
-            '--no-playlist',              // Важно: не качать весь канал
+            '--cookies', $cookiesPath,   // вот это и есть главное
+            '--no-playlist',
             '--no-warnings',
             '--socket-timeout', '20',
-            // Формат: ищем лучшее видео (mp4) + лучшее аудио (m4a) и склеиваем в mp4
-            // Если не склеивается, берем просто лучшее готовое mp4
+
             '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
             '-o', $tempPath,
             $url
         ];
 
         $process = new Process($command);
-        $process->setTimeout(300); // Даем до 5 минут (YouTube может быть тяжелым)
+        $process->setTimeout(300);
         $process->run();
 
         if (!$process->isSuccessful()) {
