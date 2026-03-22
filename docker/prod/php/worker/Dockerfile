@@ -31,9 +31,9 @@ RUN chmod 755 /usr/local/bin/yt-dlp && \
     chown www-data:www-data /usr/local/bin/yt-dlp
 
 # Твои конфиги
-COPY ./docker/dev/php/worker/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/prod/php/worker/conf.d /usr/local/etc/php/conf.d
 RUN mkdir -p /etc/supervisor.d
-COPY ./docker/dev/php/worker/supervisord.conf /etc/supervisord.conf
+COPY ./docker/prod/php/worker/supervisord.conf /etc/supervisord.conf
 
 WORKDIR /var/www/app
 

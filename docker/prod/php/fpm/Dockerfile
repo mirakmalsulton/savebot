@@ -4,6 +4,6 @@ ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/mas
 RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
 RUN install-php-extensions pdo_mysql mcrypt xdebug
 
-COPY ./docker/dev/php/fpm/conf.d /usr/local/etc/php/conf.d
+COPY ./docker/prod/php/fpm/conf.d /usr/local/etc/php/conf.d
 
 WORKDIR /var/www/app
