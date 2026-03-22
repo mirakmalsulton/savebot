@@ -27,13 +27,13 @@ class Shorts implements VideoProviderInterface
 
         $command = [
             'yt-dlp',
+            '--js-runtimes', 'node',
+            '--remote-components', 'ejs:github',
             '--cookies', $cookiesPath,
             '--no-playlist',
             '--no-warnings',
             '--socket-timeout', '20',
-
-//            '-f', 'bestvideo*+bestaudio/best',
-            '-f', '136',
+            '-f', '136/134/18',
             '-o', $tempPath,
             $url
         ];
