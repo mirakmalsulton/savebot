@@ -27,15 +27,13 @@ class Shorts implements VideoProviderInterface
 
         $command = [
             'yt-dlp',
-            '--cookies', $cookiesPath,   // вот это и есть главное
+            '--cookies', $cookiesPath,
             '--no-playlist',
             '--no-warnings',
             '--socket-timeout', '20',
 
-            '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-//            '-f', 'best[ext=mp4]/best',
-//            '-f', 'bestvideo+bestaudio/best',
-
+//            '-f', 'bestvideo*+bestaudio/best',
+            '-f', '136',
             '-o', $tempPath,
             $url
         ];
