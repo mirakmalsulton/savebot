@@ -1,17 +1,17 @@
 up:
-	docker-compose up -d
+	docker compose up -d
 
 up_m:
-	docker-compose -f docker-compose-multiple-nginx-port.yml up -d
+	docker compose -f docker compose-multiple-nginx-port.yml up -d
 
 build:
-	docker-compose build
+	docker compose build
 
 up_prod:
-	docker-compose -f docker-compose-prod.yml up -d
+	docker compose -f docker compose-prod.yml up -d
 
 build_prod:
-	docker-compose -f docker-compose-prod.yml build
+	docker compose -f docker compose-prod.yml build
 
 ps:
 	docker ps -a
@@ -25,10 +25,10 @@ perm:
 	sudo chmod -R ug+rwx ./
 
 test:
-	docker-compose exec cli php artisan test
+	docker compose exec cli php artisan test
 
 conf_cache:
-	docker-compose exec cli php artisan config:cache
+	docker compose exec cli php artisan config:cache
 
 conf_clear:
-	docker-compose exec cli php artisan config:clear
+	docker compose exec cli php artisan config:clear

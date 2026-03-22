@@ -22,7 +22,7 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/dev/php/cli/Dockerfile
+      dockerfile: ./docker/prod/php/cli/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
@@ -35,7 +35,7 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/dev/php/fpm/Dockerfile
+      dockerfile: ./docker/prod/php/fpm/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
@@ -48,7 +48,7 @@ services:
   nginx:
     build:
       context: ./
-      dockerfile: ./docker/dev/nginx/Dockerfile
+      dockerfile: ./docker/prod/nginx/Dockerfile
     volumes:
       - ./:/var/www/app
     ports:
@@ -62,7 +62,7 @@ services:
     user: "1000:2000"
     build:
       context: ./
-      dockerfile: ./docker/dev/php/worker/Dockerfile
+      dockerfile: ./docker/prod/php/worker/Dockerfile
     volumes:
       - ./:/var/www/app
     environment:
